@@ -31,19 +31,20 @@
         // I feel like there might be better ways to pull this off, but the performance won't suffer here so...
         var masterList = [
             { word: "test one", chances: 12 },
-            { word: "test not one", chances: 15 },
-            { word: "not test three", chances: 15 }
+            { word: "carl", chances: 15 },
+            { word: "bun", chances: 15 }
         ];
 
         var guessWords = [
             { word: "test one", chances: 12, contains: ["t", "e", "s", "o", "n"] },
             { word: "test not one", chances: 15, contains: ["t", "e", "s", "o", "n"] },
-            { word: "not test three", chances: 15, contains: ["t", "e", "s", "o", "n", "h"] }
+            { word: "not test three", chances: 15, contains: ["t", "e", "s", "o", "n", "h", "r"] }
         ];
         // guesses remaining. function passes value based on word selected
         // Start/Restart game
         var start = false;
         var played = false;
+        var levelIndex = 0;
         var wins = 0;
         var currentWord = getGuessWord(guessWords);
         var remaining;
@@ -57,6 +58,7 @@
 
         var correctGuess = [];
         var wrongGuess = [];
+        
 
 
 
@@ -70,9 +72,11 @@
 
 
 
-        function getGuessWord(guessWords) {
+        function getGuessWord() {
 
-            var currentObj = guessWords.shift();
+            // var currentObj = guessWords.shift();
+            console.log("level Index: "+levelIndex);
+            var currentObj = guessWords[levelIndex];
             current = currentObj.word;
             remaining = currentObj.chances;
             contain = currentObj.contains;
@@ -80,8 +84,11 @@
             // delete list[guessIndex];
             // console.log(list);
             played = true;
-            return current;
             console.log(contain);
+            levelIndex++;
+            console.log(levelIndex);
+            return current;
+
         }
         console.log('Word: ' + current + ' Remains: ' + remaining + ' Contains: ' + contain);
 
@@ -106,8 +113,7 @@
                 } if(correctGuess.length === contain.length){
                     alert("You're on the road to flavor town!");
                     clearLevel();
-                    blankController();
-                    console.log(currentWord);
+                    console.log("Current Word Event ======>"+currentWord);
                     
                 }
             }
@@ -123,6 +129,7 @@
         // When a user enters a letter in letterList the value diplayed changes from a _ to the letter for all instances within the word or phrase. 
         function blankController() {
             correctGuess = [];
+            console.log("correct guess: "+correctGuess);
             for(var i = 0; i < letterList.length; i++){
                 if( letterList[i] === " "){
                     var newBlank = document.createElement('p');
@@ -148,14 +155,16 @@
         function clearLevel() {
             // contain = [];
             var myNode = document.getElementById("blanks");
-            while (myNode.firstChild) {
+            console.log("My Node: "+myNode);
+           for (i = 0; i < myNode.childElementCount; i++) {
                 myNode.removeChild(myNode.firstChild);
             }
-            currentWord = getGuessWord(guessWords);
+            currentWord = getGuessWord();
             for (var i = 0; i < currentWord.length; i++) {
             var ltr = currentWord.substr(i, 1);
             letterList.push(ltr);
-            console.log(contain);
+            //console.log(contain);
+            blankController();
         }
 
         }
