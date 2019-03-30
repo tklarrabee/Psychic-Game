@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        // Initiate game 
+        // variable containing posssible words
+        // Line showing blanks and successful guesses
+        // Win and Lose States
+        // Score
+        // Challenge Word Selection, random or ordered
+        // Set Number of Guesses
+        // Number of guesses goes down as letters are selected
+        // Only Accept letters as guesses
+
+        // ============================== VARIABLES ===============================
+
+        // Use this list to reset the game in case you wanted to play again.
+        // I feel like there might be better ways to pull this off, but the performance won't suffer here so...
+        var masterList = [
+            { word: "Test One", chances: 12 },
+            { word: "Test Not One", chances: 15 },
+            { word: "Not Test Three", chances: 15 }
+        ];
+
+        var guessWords = [
+            { word: "Test One", chances: 12, contains: ["t", "e", "s", "o", "n"] },
+            { word: "Test Not One", chances: 15, contains: ["t", "e", "s", "o", "n"] },
+            { word: "Not Test Three", chances: 15, contains: ["t", "e", "s", "o", "n", "h"] }
+        ];
+        // guesses remaining. function passes value based on word selected
+        // Start/Restart game
+        var start = false;
+        var played = false;
+        var wins = 0;
+        var currentWord = getGuessWord();
+        var remaining;
+        var contain;
+        var letterList = [];
+        //var unplayed = [];
+        // This will be the word that is guessed
+
+
+
+
+
+
+        //  =============================== FUNCTIONS ===============================
+
+        // Select the next word from the list and remove it from the list of words playable. 
+
+
+
+
+        function getGuessWord() {
+
+            var currentObj = guessWords.shift();
+            current = currentObj.word;
+            remaining = currentObj.chances;
+            contain = currentObj.contains;
+
+            // delete list[guessIndex];
+            // console.log(list);
+            played = true;
+            return current;
+        }
+        console.log('Word: ' + current + ' Remains: ' + remaining + ' Contains: ' + contain);
+
+
+        document.onkeyup = function (event) {
+            var letter = event.key.toLowerCase();
+
+        }
+        //For each letter in the string 
+        // .slice on the string, add to new array  use .forEach 
+
+        
+        for (var i = 0; i < currentWord.length; i++) {
+            var ltr = currentWord.substr(i,1);
+            letterList.push(ltr);
+        }
+        
+        
+        
+        
+        
+        // TESTING ZONE DOWN THIS WAY
+        getGuessWord();
+        console.log(contain);
+        console.log(letterList);
+
+
+
+
+
+// Declare variable for number of chances
+    </script>
+</body>
+
+</html>
