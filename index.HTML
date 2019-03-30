@@ -10,6 +10,9 @@
 
 <body>
 
+    <div id="blanks">
+        
+    </div>
 
     <script>
         // Initiate game 
@@ -27,27 +30,33 @@
         // Use this list to reset the game in case you wanted to play again.
         // I feel like there might be better ways to pull this off, but the performance won't suffer here so...
         var masterList = [
-            { word: "Test One", chances: 12 },
-            { word: "Test Not One", chances: 15 },
-            { word: "Not Test Three", chances: 15 }
+            { word: "test one", chances: 12 },
+            { word: "test not one", chances: 15 },
+            { word: "not test three", chances: 15 }
         ];
 
         var guessWords = [
-            { word: "Test One", chances: 12, contains: ["t", "e", "s", "o", "n"] },
-            { word: "Test Not One", chances: 15, contains: ["t", "e", "s", "o", "n"] },
-            { word: "Not Test Three", chances: 15, contains: ["t", "e", "s", "o", "n", "h"] }
+            { word: "test one", chances: 12, contains: ["t", "e", "s", "o", "n"] },
+            { word: "test not one", chances: 15, contains: ["t", "e", "s", "o", "n"] },
+            { word: "not test three", chances: 15, contains: ["t", "e", "s", "o", "n", "h"] }
         ];
         // guesses remaining. function passes value based on word selected
         // Start/Restart game
         var start = false;
         var played = false;
         var wins = 0;
-        var currentWord = getGuessWord();
+        var currentWord = getGuessWord(guessWords);
         var remaining;
         var contain;
         var letterList = [];
-        //var unplayed = [];
-        // This will be the word that is guessed
+        var letterProgress = "";
+        for (var i = 0; i < currentWord.length; i++) {
+            var ltr = currentWord.substr(i, 1);
+            letterList.push(ltr);
+        }
+
+        var correctGuess = [];
+        var wrongGuess = [];
 
 
 
@@ -61,7 +70,7 @@
 
 
 
-        function getGuessWord() {
+        function getGuessWord(guessWords) {
 
             var currentObj = guessWords.shift();
             current = currentObj.word;
@@ -72,30 +81,98 @@
             // console.log(list);
             played = true;
             return current;
+            console.log(contain);
         }
         console.log('Word: ' + current + ' Remains: ' + remaining + ' Contains: ' + contain);
 
 
         document.onkeyup = function (event) {
             var letter = event.key.toLowerCase();
-
-        }
+            if (letterList.indexOf(letter) != -1 && correctGuess.indexOf(letter) === -1 && letter != " " && correctGuess.length != contain.length) {
+                correctGuess.push(letter);
+                console.log("correct guess: "+correctGuess);
+                var showLtr = "letter"+letter;
+                replaceArray = document.getElementsByClassName(showLtr);
+                console.log(replaceArray);
+                for(var i = 0 ; i < replaceArray.length; i++){
+                    replaceArray[i].innerText = letter;
+                }
+                // Registers a wrong guess for incorrect letters that you have not yet guessed. 
+                } if(letterList.indexOf(letter) === -1 && remaining > 0 && letter.match(/[abcdefghijklmnopqrstuvwxyz]/) && letter != "f1" && letter != "f2" && letter != "f3" && letter != "f4" && letter != "f5" && letter != "f6" && letter != "f7" && letter != "f8" && letter != "f9"  && letter != "f10" && letter != "f11" && letter != "f12"){ 
+                    wrongGuess.push(letter);
+                    remaining--;
+                    console.log(remaining);
+                    console.log("wrong guess: " + wrongGuess);
+                } if(correctGuess.length === contain.length){
+                    alert("You're on the road to flavor town!");
+                    clearLevel();
+                    blankController();
+                    console.log(currentWord);
+                    
+                }
+            }
+        
         //For each letter in the string 
         // .slice on the string, add to new array  use .forEach 
+        // Add as blanks set class as letter
 
         
-        for (var i = 0; i < currentWord.length; i++) {
-            var ltr = currentWord.substr(i,1);
-            letterList.push(ltr);
+
+
+
+        // When a user enters a letter in letterList the value diplayed changes from a _ to the letter for all instances within the word or phrase. 
+        function blankController() {
+            correctGuess = [];
+            for(var i = 0; i < letterList.length; i++){
+                if( letterList[i] === " "){
+                    var newBlank = document.createElement('p');
+                    newBlank.innerHTML = "<br>";
+                    
+                    document.getElementById("blanks").appendChild(newBlank);
+                } else{
+                    var newBlank = document.createElement('p');
+                    newBlank.innerHTML = "_";
+                    newBlank.className = "letter"+letterList[i];
+                    document.getElementById("blanks").appendChild(newBlank);
+                }
+                    
+                
+            }
+                
+        
+                
+            
         }
-        
-        
-        
-        
-        
+
+        // This class is supposed to refresh all of the variables
+        function clearLevel() {
+            // contain = [];
+            var myNode = document.getElementById("blanks");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+            currentWord = getGuessWord(guessWords);
+            for (var i = 0; i < currentWord.length; i++) {
+            var ltr = currentWord.substr(i, 1);
+            letterList.push(ltr);
+            console.log(contain);
+        }
+
+        }
+        // function showCorrectGuess(selector, ltr){
+        //     var showLtr = document.getElementsByClassName(selector);
+        //     showLtr.innerText(ltr);
+
+        // }
+
+        //If the user guess is correct it is added to the list of correct guesses. if 
+
+
         // TESTING ZONE DOWN THIS WAY
-        getGuessWord();
-        console.log(contain);
+        // getGuessWord(guessWords);
+        blankController();
+        // letterList.forEach(blankController());
+        
         console.log(letterList);
 
 
