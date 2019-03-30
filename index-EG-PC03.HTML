@@ -105,7 +105,7 @@
                     replaceArray[i].innerText = letter;
                 }
                 // Registers a wrong guess for incorrect letters that you have not yet guessed. 
-                } if(letterList.indexOf(letter) === -1 && remaining > 0 && letter.match(/[abcdefghijklmnopqrstuvwxyz]/) && letter != "f1" && letter != "f2" && letter != "f3" && letter != "f4" && letter != "f5" && letter != "f6" && letter != "f7" && letter != "f8" && letter != "f9"  && letter != "f10" && letter != "f11" && letter != "f12" && letter !="alt"){ 
+                } if(letterList.indexOf(letter) === -1 && remaining > 0 && letter.match(/[abcdefghijklmnopqrstuvwxyz]/) && letter != "f1" && letter != "f2" && letter != "f3" && letter != "f4" && letter != "f5" && letter != "f6" && letter != "f7" && letter != "f8" && letter != "f9"  && letter != "f10" && letter != "f11" && letter != "f12"){ 
                     wrongGuess.push(letter);
                     remaining--;
                     console.log(remaining);
@@ -145,7 +145,7 @@
                     
                 
             }
-                console.log("Letter List Length"+letterList.length);
+                
         
                 
             
@@ -156,7 +156,7 @@
             // contain = [];
             var myNode = document.getElementById("blanks");
             console.log("My Node: "+myNode);
-           for (i = myNode.childElementCount; i >= 0 ; i--) {
+           for (i = 0; i < myNode.childElementCount; i++) {
                 myNode.removeChild(myNode.firstChild);
             }
             currentWord = getGuessWord();
