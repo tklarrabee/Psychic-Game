@@ -1,0 +1,32 @@
+body, html {
+    margin: 0;
+    background-color: grey;
+ }
+
+ .box {
+     position: relative;
+     margin: 10px 10px;
+     border-style: dashed;
+     width: 25%;
+     height: 80px;
+     text-align: center;
+ }
+
+ h4 {
+    margin: 0;
+    padding: 0;
+ }
+
+ #container {
+     margin-left: 5px;
+ }
+
+ .blank {
+     padding: 4px;
+     margin-left: 3px;
+ }
+
+ #flavorTown {
+     position: absolute;
+     left: 400px;
+ }

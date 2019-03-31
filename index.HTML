@@ -5,190 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" href="assets/css/style.css">
     <title>Document</title>
 </head>
 
 <body>
-
-    <div id="blanks">
+    <div id="flavorTown">
+                <img src="https://pixel.nymag.com/imgs/daily/grub/2016/06/06/06-guy-fieri.w700.h700.jpg" width="350px" id="fieri">
+    </div>
+    <div id="container">
+        <h3>Press any key to get started, noob.</h3>
+        <div id="blanks" class="box">
         
+        </div>
+        <div id="wins">
+            <!-- DOM Insert wins -->
+        </div>
+        <h4>Dumb Guesses</h4>
+        <div id="wrongLetter" class="box">
+            
+            <!-- DOM insert spans of letters -->
+        </div>
+        <h4>Lives remaining</h4>
+        <div id="remaining" class="box">
+            
+            <!-- DOM insert remaining guesses -->
+        </div>
+        <h4>Wins</h4>
+        <div id="score" class="box">
+
+        </div>
+
     </div>
 
-    <script>
-        // Initiate game 
-        // variable containing posssible words
-        // Line showing blanks and successful guesses
-        // Win and Lose States
-        // Score
-        // Challenge Word Selection, random or ordered
-        // Set Number of Guesses
-        // Number of guesses goes down as letters are selected
-        // Only Accept letters as guesses
+    <script src="javascript/game.js">
 
-        // ============================== VARIABLES ===============================
-
-        // Use this list to reset the game in case you wanted to play again.
-        // I feel like there might be better ways to pull this off, but the performance won't suffer here so...
-        var masterList = [
-            { word: "test one", chances: 12 },
-            { word: "carl", chances: 15 },
-            { word: "bun", chances: 15 }
-        ];
-
-        var guessWords = [
-            { word: "test one", chances: 12, contains: ["t", "e", "s", "o", "n"] },
-            { word: "test not one", chances: 15, contains: ["t", "e", "s", "o", "n"] },
-            { word: "not test three", chances: 15, contains: ["t", "e", "s", "o", "n", "h", "r"] }
-        ];
-        // guesses remaining. function passes value based on word selected
-        // Start/Restart game
-        var start = false;
-        var played = false;
-        var levelIndex = 0;
-        var wins = 0;
-        var currentWord = getGuessWord(guessWords);
-        var remaining;
-        var contain;
-        var letterList = [];
-        var letterProgress = "";
-        for (var i = 0; i < currentWord.length; i++) {
-            var ltr = currentWord.substr(i, 1);
-            letterList.push(ltr);
-        }
-
-        var correctGuess = [];
-        var wrongGuess = [];
-        
-
-
-
-
-
-
-        //  =============================== FUNCTIONS ===============================
-
-        // Select the next word from the list and remove it from the list of words playable. 
-
-
-
-
-        function getGuessWord() {
-
-            // var currentObj = guessWords.shift();
-            console.log("level Index: "+levelIndex);
-            var currentObj = guessWords[levelIndex];
-            current = currentObj.word;
-            remaining = currentObj.chances;
-            contain = currentObj.contains;
-
-            // delete list[guessIndex];
-            // console.log(list);
-            played = true;
-            console.log(contain);
-            levelIndex++;
-            console.log(levelIndex);
-            return current;
-
-        }
-        console.log('Word: ' + current + ' Remains: ' + remaining + ' Contains: ' + contain);
-
-
-        document.onkeyup = function (event) {
-            var letter = event.key.toLowerCase();
-            if (letterList.indexOf(letter) != -1 && correctGuess.indexOf(letter) === -1 && letter != " " && correctGuess.length != contain.length) {
-                correctGuess.push(letter);
-                console.log("correct guess: "+correctGuess);
-                var showLtr = "letter"+letter;
-                replaceArray = document.getElementsByClassName(showLtr);
-                console.log(replaceArray);
-                for(var i = 0 ; i < replaceArray.length; i++){
-                    replaceArray[i].innerText = letter;
-                }
-                // Registers a wrong guess for incorrect letters that you have not yet guessed. 
-                } if(letterList.indexOf(letter) === -1 && remaining > 0 && letter.match(/[abcdefghijklmnopqrstuvwxyz]/) && letter != "f1" && letter != "f2" && letter != "f3" && letter != "f4" && letter != "f5" && letter != "f6" && letter != "f7" && letter != "f8" && letter != "f9"  && letter != "f10" && letter != "f11" && letter != "f12" && letter !="alt"){ 
-                    wrongGuess.push(letter);
-                    remaining--;
-                    console.log(remaining);
-                    console.log("wrong guess: " + wrongGuess);
-                } if(correctGuess.length === contain.length){
-                    alert("You're on the road to flavor town!");
-                    clearLevel();
-                    console.log("Current Word Event ======>"+currentWord);
-                    
-                }
-            }
-        
-        //For each letter in the string 
-        // .slice on the string, add to new array  use .forEach 
-        // Add as blanks set class as letter
-
-        
-
-
-
-        // When a user enters a letter in letterList the value diplayed changes from a _ to the letter for all instances within the word or phrase. 
-        function blankController() {
-            correctGuess = [];
-            console.log("correct guess: "+correctGuess);
-            for(var i = 0; i < letterList.length; i++){
-                if( letterList[i] === " "){
-                    var newBlank = document.createElement('p');
-                    newBlank.innerHTML = "<br>";
-                    
-                    document.getElementById("blanks").appendChild(newBlank);
-                } else{
-                    var newBlank = document.createElement('p');
-                    newBlank.innerHTML = "_";
-                    newBlank.className = "letter"+letterList[i];
-                    document.getElementById("blanks").appendChild(newBlank);
-                }
-                    
-                
-            }
-                console.log("Letter List Length"+letterList.length);
-        
-                
-            
-        }
-
-        // This class is supposed to refresh all of the variables
-        function clearLevel() {
-            // contain = [];
-            var myNode = document.getElementById("blanks");
-            console.log("My Node: "+myNode);
-           for (i = myNode.childElementCount; i >= 0 ; i--) {
-                myNode.removeChild(myNode.firstChild);
-            }
-            currentWord = getGuessWord();
-            for (var i = 0; i < currentWord.length; i++) {
-            var ltr = currentWord.substr(i, 1);
-            letterList.push(ltr);
-            //console.log(contain);
-            blankController();
-        }
-
-        }
-        // function showCorrectGuess(selector, ltr){
-        //     var showLtr = document.getElementsByClassName(selector);
-        //     showLtr.innerText(ltr);
-
-        // }
-
-        //If the user guess is correct it is added to the list of correct guesses. if 
-
-
-        // TESTING ZONE DOWN THIS WAY
-        // getGuessWord(guessWords);
-        blankController();
-        // letterList.forEach(blankController());
-        
-        console.log(letterList);
-
-
-
-
-
-// Declare variable for number of chances
     </script>
 </body>
 
